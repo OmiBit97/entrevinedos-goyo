@@ -71,7 +71,7 @@ export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBookin
       {/* =========================================================================
           00 · HERO EDITORIAL CENTRADO CON MOTOR DE RESERVA DIRECTO INTEGRADO
           ========================================================================= */}
-      <section className="relative min-h-[100dvh] flex flex-col justify-between overflow-hidden bg-[#141110] pt-28 sm:pt-36 pb-10 sm:pb-12 text-[#F6F3EE]">
+      <section className="relative min-h-[82dvh] sm:min-h-[92dvh] flex flex-col justify-between overflow-hidden bg-[#141110] pt-28 sm:pt-36 pb-12 sm:pb-14 text-[#F6F3EE]">
         <div className="absolute inset-0 z-0">
           <video
             autoPlay
@@ -94,10 +94,10 @@ export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBookin
           <div className="absolute inset-0 bg-gradient-to-b from-[#141110]/80 via-[#141110]/45 to-[#141110]" />
         </div>
 
-        {/* Contenido Totalmente Centrado + Motor Interno Directo */}
+        {/* Contenido Totalmente Centrado y Limpio */}
         <div className="relative z-10 mx-auto my-auto w-full max-w-6xl px-4 sm:px-6 md:px-8 text-center">
           <div className="mx-auto max-w-4xl space-y-5 sm:space-y-6">
-            <div className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-[#C5A572]/45 bg-[#141110]/65 px-4 py-1.5 backdrop-blur-md">
+            <div className="hidden sm:inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-[#C5A572]/45 bg-[#141110]/65 px-4 py-1.5 backdrop-blur-md">
               <MapPin className="h-3.5 w-3.5 shrink-0 text-[#C5A572]" />
               <span className="font-technical text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-[#C5A572]">
                 Peñafiel · Ribera del Duero · Bodegas Marcos
@@ -116,30 +116,88 @@ export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBookin
             <p className="mx-auto max-w-2xl text-sm sm:text-base md:text-lg font-light leading-relaxed text-[#EAE3D9]/90">
               {HOME_CONTENT.heroSubtitle}
             </p>
-          </div>
 
-          {/* Barra rápida que lleva directo al motor de reserva en Alojamientos */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link
+                to="/alojamientos"
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#4A1521] px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#F6F3EE] shadow-lg transition hover:bg-[#631D2C]"
+              >
+                <span>Explorar Alojamientos</span>
+                <ArrowRight className="h-4 w-4 text-[#C5A572]" />
+              </Link>
+              <a
+                href="#reserva-rapida"
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-[#C5A572]/50 bg-[#141110]/50 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#F6F3EE] backdrop-blur transition hover:bg-[#C5A572] hover:text-[#141110]"
+              >
+                <span>Consultar Fechas</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll Prompt */}
+        <div className="relative z-10 mx-auto hidden sm:flex items-center justify-center pt-8">
+          <a
+            href="#alojamientos-showcase"
+            className="inline-flex items-center gap-2 font-technical text-[10px] uppercase tracking-[0.28em] text-[#C5A572]/85 hover:text-[#F6F3EE] transition"
+          >
+            <span>{HOME_CONTENT.heroScrollLabel}</span>
+            <ArrowDownRight className="h-3.5 w-3.5" />
+          </a>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          MARQUESINA CINÉTICA EDITORIAL (Solo Desktop / Tablet)
+          ========================================================================= */}
+      <div
+        aria-hidden="true"
+        className="hidden sm:block overflow-hidden border-y border-[#C5A572]/35 bg-[#141110] py-3.5 text-[#C5A572]"
+      >
+        <div className="animate-awwwards-marquee">
+          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, idx) => (
+            <div key={idx} className="flex shrink-0 items-center gap-6 px-4">
+              <span className="font-technical text-[11px] uppercase tracking-[0.26em] whitespace-nowrap">
+                {item}
+              </span>
+              <span className="h-1.5 w-1.5 rounded-full bg-[#4A1521] ring-1 ring-[#C5A572]/60" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* =========================================================================
+          BARRA RÁPIDA DE DISPONIBILIDAD (Debajo del Hero, sin invadir portada)
+          ========================================================================= */}
+      <section
+        id="reserva-rapida"
+        className="scroll-mt-24 border-b border-[#D8CFC2] bg-[#EAE3D9]/50 px-4 sm:px-6 py-8 sm:py-10"
+      >
+        <div className="mx-auto max-w-4xl">
+          <p className="mb-3 text-center font-technical text-[10px] uppercase tracking-[0.22em] text-[#4A1521]">
+            Consulta rápida de disponibilidad · Reserva directa en Alojamientos
+          </p>
           <form
             onSubmit={handleHeroBookingSubmit}
-            className="mx-auto mt-8 sm:mt-10 max-w-4xl rounded-2xl sm:rounded-full border border-[#C5A572]/45 bg-[#141110]/85 p-2.5 sm:p-2 backdrop-blur-xl shadow-[0_24px_60px_rgba(0,0,0,0.45)]"
+            className="rounded-2xl sm:rounded-full border border-[#D8CFC2] bg-white p-2.5 sm:p-2 shadow-sm"
           >
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-12 sm:items-center">
               <label className="sm:col-span-3 flex flex-col px-4 py-1.5 text-left">
-                <span className="flex items-center gap-1.5 font-technical text-[9px] uppercase tracking-[0.18em] text-[#C5A572]">
-                  <Calendar className="h-3 w-3 shrink-0" />
+                <span className="flex items-center gap-1.5 font-technical text-[9px] uppercase tracking-[0.18em] text-[#9A7B56]">
+                  <Calendar className="h-3 w-3 shrink-0 text-[#4A1521]" />
                   Entrada
                 </span>
                 <input
                   type="date"
                   value={heroCheckIn}
                   onChange={(e) => setHeroCheckIn(e.target.value)}
-                  className="mt-0.5 w-full bg-transparent font-technical text-xs text-[#F6F3EE] focus:outline-none [color-scheme:dark]"
+                  className="mt-0.5 w-full bg-transparent font-technical text-xs text-[#1A1615] focus:outline-none"
                 />
               </label>
 
-              <label className="sm:col-span-3 flex flex-col border-t sm:border-t-0 sm:border-l border-white/10 px-4 py-1.5 text-left">
-                <span className="flex items-center gap-1.5 font-technical text-[9px] uppercase tracking-[0.18em] text-[#C5A572]">
-                  <Calendar className="h-3 w-3 shrink-0" />
+              <label className="sm:col-span-3 flex flex-col border-t sm:border-t-0 sm:border-l border-[#D8CFC2] px-4 py-1.5 text-left">
+                <span className="flex items-center gap-1.5 font-technical text-[9px] uppercase tracking-[0.18em] text-[#9A7B56]">
+                  <Calendar className="h-3 w-3 shrink-0 text-[#4A1521]" />
                   Salida
                 </span>
                 <input
@@ -147,19 +205,19 @@ export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBookin
                   min={heroCheckIn || undefined}
                   value={heroCheckOut}
                   onChange={(e) => setHeroCheckOut(e.target.value)}
-                  className="mt-0.5 w-full bg-transparent font-technical text-xs text-[#F6F3EE] focus:outline-none [color-scheme:dark]"
+                  className="mt-0.5 w-full bg-transparent font-technical text-xs text-[#1A1615] focus:outline-none"
                 />
               </label>
 
-              <label className="sm:col-span-3 flex flex-col border-t sm:border-t-0 sm:border-l border-white/10 px-4 py-1.5 text-left">
-                <span className="flex items-center gap-1.5 font-technical text-[9px] uppercase tracking-[0.18em] text-[#C5A572]">
-                  <Users className="h-3 w-3 shrink-0" />
+              <label className="sm:col-span-3 flex flex-col border-t sm:border-t-0 sm:border-l border-[#D8CFC2] px-4 py-1.5 text-left">
+                <span className="flex items-center gap-1.5 font-technical text-[9px] uppercase tracking-[0.18em] text-[#9A7B56]">
+                  <Users className="h-3 w-3 shrink-0 text-[#4A1521]" />
                   Huéspedes
                 </span>
                 <select
                   value={heroGuests}
                   onChange={(e) => setHeroGuests(Number(e.target.value))}
-                  className="mt-0.5 w-full bg-transparent font-technical text-xs text-[#F6F3EE] focus:outline-none cursor-pointer [&>option]:bg-[#141110]"
+                  className="mt-0.5 w-full bg-transparent font-technical text-xs text-[#1A1615] focus:outline-none cursor-pointer"
                 >
                   {[2, 4, 6, 8, 12, 16].map((n) => (
                     <option key={n} value={n}>
@@ -181,37 +239,7 @@ export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBookin
             </div>
           </form>
         </div>
-
-        {/* Scroll Prompt */}
-        <div className="relative z-10 mx-auto hidden sm:flex items-center justify-center pt-8">
-          <a
-            href="#alojamientos-showcase"
-            className="inline-flex items-center gap-2 font-technical text-[10px] uppercase tracking-[0.28em] text-[#C5A572]/85 hover:text-[#F6F3EE] transition"
-          >
-            <span>{HOME_CONTENT.heroScrollLabel}</span>
-            <ArrowDownRight className="h-3.5 w-3.5" />
-          </a>
-        </div>
       </section>
-
-      {/* =========================================================================
-          MARQUESINA CINÉTICA EDITORIAL
-          ========================================================================= */}
-      <div
-        aria-hidden="true"
-        className="overflow-hidden border-y border-[#C5A572]/35 bg-[#141110] py-3.5 text-[#C5A572]"
-      >
-        <div className="animate-awwwards-marquee">
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, idx) => (
-            <div key={idx} className="flex shrink-0 items-center gap-6 px-4">
-              <span className="font-technical text-[11px] uppercase tracking-[0.26em] whitespace-nowrap">
-                {item}
-              </span>
-              <span className="h-1.5 w-1.5 rounded-full bg-[#4A1521] ring-1 ring-[#C5A572]/60" />
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* =========================================================================
           01 · NUESTROS ALOJAMIENTOS (ATELIER INTERACTIVO)
