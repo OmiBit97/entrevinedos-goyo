@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-display: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-limestone: #F6F3EE;
+  --color-travertine: #EAE3D9;
+  --color-stone: #D8CFC2;
+  --color-ink: #1A1615;
+  --color-clay: #5C5349;
+  --color-burgundy: #4A1521;
+  --color-burgundy-hover: #631D2C;
+  --color-barrel: #9A7B56;
+  --color-harvest-gold: #C5A572;
+  --color-cellar: #141110;
+}
+
+:root {
+  --bg-limestone: #F6F3EE;
+  --bg-travertine: #EAE3D9;
+  --border-stone: #D8CFC2;
+  --text-ink: #1A1615;
+  --text-clay: #5C5349;
+  --accent-burgundy: #4A1521;
+  --accent-burgundy-hover: #631D2C;
+  --accent-barrel: #9A7B56;
+  --accent-gold: #C5A572;
+  --bg-cellar: #141110;
+}
+
+html,
+body {
+  background-color: var(--bg-limestone);
+  color: var(--text-ink);
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ocultar barra de scroll horizontal en carruseles táctiles */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Tipografía editorial refinada */
+.font-editorial {
+  font-family: var(--font-serif);
+}
+
+.font-technical {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Animación sutil para skeletons de piedra caliza */
+@keyframes limestoneShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-limestone {
+  background: linear-gradient(
+    90deg,
+    #EAE3D9 25%,
+    #F6F3EE 50%,
+    #EAE3D9 75%
+  );
+  background-size: 200% 100%;
+  animation: limestoneShimmer 1.8s ease-in-out infinite;
+}
+
+/* Reservado para animaciones futuras sin deformar el cálculo de scroll */
+.cv-auto {
+  overflow-x: clip;
+}
+
+/* ==========================================================================
+   Awwwards SOTD Hospitality & Luxury Accommodations System
+   ========================================================================== */
+
+.ease-atelier {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.display-numeral {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+@keyframes awwwardsMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-awwwards-marquee {
+  display: flex;
+  width: max-content;
+  animation: awwwardsMarquee 42s linear infinite;
+  will-change: transform;
+}
+
+.animate-awwwards-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-awwwards-marquee {
+    animation: none;
+  }
+}
+
+/* Grano cinematográfico sutil sobre capas hero oscuras */
+.film-grain {
+  background-image: radial-gradient(rgba(246, 243, 238, 0.08) 1px, transparent 0);
+  background-size: 3px 3px;
+}
