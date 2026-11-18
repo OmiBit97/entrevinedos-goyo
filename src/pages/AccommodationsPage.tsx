@@ -57,44 +57,17 @@ export const AccommodationsPage: React.FC = () => {
             priority
             className="opacity-55"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#141110] via-[#141110]/45 to-[#141110]/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#141110]/95 via-[#141110]/55 to-[#141110]/70" />
         </div>
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 md:px-8">
-          <p className="inline-flex items-center gap-2 font-technical text-[10px] sm:text-[11px] uppercase tracking-[0.2em] sm:tracking-[0.24em] text-[#C5A572]">
+          <p className="inline-flex items-center gap-2 font-technical text-[10px] sm:text-[11px] uppercase tracking-[0.2em] sm:tracking-[0.24em] text-[#C5A572] drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]">
             <MapPin className="h-3.5 w-3.5 shrink-0" />
-            {ALOJAMIENTOS_PAGE_COPY.subtitle}
+            Descubre nuestros alojamientos
           </p>
-          <h1 className="mt-3 font-editorial text-4xl sm:text-5xl font-medium md:text-6xl lg:text-7xl">
+          <h1 className="mt-3 font-editorial text-4xl sm:text-5xl font-medium md:text-6xl lg:text-7xl drop-shadow-[0_4px_18px_rgba(0,0,0,0.75)]">
             {ALOJAMIENTOS_PAGE_COPY.title}
           </h1>
-
-          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-3xl border-t border-white/15 pt-5">
-            <div className="min-w-0">
-              <p className="font-technical text-[10px] uppercase tracking-widest text-[#C5A572]">
-                Estancias
-              </p>
-              <p className="font-editorial text-xl sm:text-2xl font-medium">10 Casas</p>
-            </div>
-            <div className="min-w-0">
-              <p className="font-technical text-[10px] uppercase tracking-widest text-[#C5A572]">
-                Superficie
-              </p>
-              <p className="font-editorial text-xl sm:text-2xl font-medium">30–120 m²</p>
-            </div>
-            <div className="min-w-0">
-              <p className="font-technical text-[10px] uppercase tracking-widest text-[#C5A572]">
-                Capacidad
-              </p>
-              <p className="font-editorial text-xl sm:text-2xl font-medium">2–16 Huéspedes</p>
-            </div>
-            <div className="min-w-0">
-              <p className="font-technical text-[10px] uppercase tracking-widest text-[#C5A572]">
-                Canal
-              </p>
-              <p className="font-editorial text-xl sm:text-2xl font-medium">Reserva Directa</p>
-            </div>
-          </div>
 
           <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
             <button
