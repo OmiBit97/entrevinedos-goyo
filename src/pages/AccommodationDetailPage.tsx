@@ -485,7 +485,7 @@ export const AccommodationDetailPage: React.FC = () => {
           >
             <div className="lg:col-span-6 space-y-2.5">
               <span className="font-technical text-[11px] uppercase tracking-[0.24em] text-[#C5A572]">
-                Siguiente Estancia · {nextHouse.location === 'muralla' ? 'Casco Histórico' : 'Finca entre Viñedos'}
+                Siguiente Estancia · {nextHouse.location === 'muralla' ? 'Alojamientos Muralla' : 'Finca Entreviñedos'}
               </span>
               <h2 className="font-editorial text-4xl sm:text-5xl font-medium text-[#F6F3EE] group-hover:text-[#C5A572] transition-colors">
                 {nextHouse.name.replace(/^\d+\.\s*/, '')}

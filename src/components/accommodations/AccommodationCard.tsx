@@ -52,7 +52,7 @@ export const AccommodationCard: React.FC<AccommodationCardProps> = ({
 
         <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-3.5">
           <span className="rounded-full border border-white/25 bg-[#141110]/70 px-3 py-1 font-technical text-[10px] uppercase tracking-[0.16em] text-[#F6F3EE] backdrop-blur-md">
-            {accommodation.location === 'muralla' ? 'Casco Histórico' : 'Entre Viñedos'}
+            {accommodation.location === 'muralla' ? 'Alojamientos Muralla' : 'Entreviñedos'}
           </span>
 
           {accommodation.isPmrAdapted && (

@@ -30,9 +30,9 @@ export const AccommodationFilterBar: React.FC<AccommodationFilterBarProps> = ({
       {/* Pestañas mínimas de entorno */}
       <div className="flex flex-wrap items-center gap-1.5">
         {[
-          { id: 'all', label: 'Todas (10)' },
-          { id: 'finca', label: 'Entre Viñedos (8)' },
-          { id: 'muralla', label: 'La Muralla (2)' },
+          { id: 'all', label: 'Todos los alojamientos (10)' },
+          { id: 'finca', label: 'Entreviñedos (8)' },
+          { id: 'muralla', label: 'Alojamientos Muralla (2)' },
         ].map((opt) => (
           <button
             key={opt.id}

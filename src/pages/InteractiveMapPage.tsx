@@ -199,7 +199,7 @@ export const InteractiveMapPage: React.FC = () => {
         id: house.slug,
         code: layout.code,
         title: house.name,
-        badge: house.location === 'finca' ? 'Finca · Entre Viñedos' : 'Peñafiel · Centro Histórico',
+        badge: house.location === 'finca' ? 'Finca · Entreviñedos' : 'Peñafiel · Alojamientos Muralla',
         category: house.location === 'finca' ? 'finca' : 'muralla',
         coords: layout.coords,
         buildingSize: layout.size,

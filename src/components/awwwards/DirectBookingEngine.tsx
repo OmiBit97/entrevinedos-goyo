@@ -171,10 +171,19 @@ export const DirectBookingEngine: React.FC<DirectBookingEngineProps> = ({
   const availableHouses = useMemo(() => {
     return ACCOMMODATIONS.filter((acc) => {
       if (environment !== 'all' && acc.location !== environment) return false;
-      if (guests > 8) return acc.location === 'muralla' || acc.maxGuests >= 6;
+      if (guests > 8) return acc.location === 'muralla';
       return guests >= 1 && guests <= acc.maxGuests;
     });
   }, [environment, guests]);
+
+  useEffect(() => {
+    if (
+      availableHouses.length > 0 &&
+      (!selectedHouseSlug || !availableHouses.some((h) => h.slug === selectedHouseSlug))
+    ) {
+      setSelectedHouseSlug(availableHouses[0].slug);
+    }
+  }, [availableHouses, selectedHouseSlug]);
 
   const selectedHouse = useMemo(
     () =>
@@ -279,9 +288,9 @@ export const DirectBookingEngine: React.FC<DirectBookingEngineProps> = ({
               onChange={(e) => setGuests(Number(e.target.value))}
               className="mt-1 w-full bg-transparent font-technical text-xs sm:text-sm text-[#F6F3EE] focus:outline-none cursor-pointer [&>option]:bg-[#141110]"
             >
-              {[2, 4, 6, 8, 12, 16].map((n) => (
+              {Array.from({ length: 16 }, (_, i) => i + 1).map((n) => (
                 <option key={n} value={n}>
-                  {n === 16 ? 'Hasta 16' : `${n} Personas`}
+                  {n === 1 ? '1 Persona' : n > 8 ? `${n} Pers. (Muralla I+II)` : `${n} Personas`}
                 </option>
               ))}
             </select>
@@ -298,9 +307,9 @@ export const DirectBookingEngine: React.FC<DirectBookingEngineProps> = ({
               onChange={(e) => setEnvironment(e.target.value as EnvironmentOption)}
               className="mt-1 w-full bg-transparent font-technical text-xs sm:text-sm text-[#F6F3EE] focus:outline-none cursor-pointer [&>option]:bg-[#141110]"
             >
-              <option value="all">Toda la Finca</option>
-              <option value="finca">Entre Viñedos</option>
-              <option value="muralla">La Muralla</option>
+              <option value="all">Todos los alojamientos</option>
+              <option value="finca">Entreviñedos</option>
+              <option value="muralla">Alojamientos Muralla</option>
             </select>
           </label>
 
@@ -890,6 +899,56 @@ export const DirectBookingEngine: React.FC<DirectBookingEngineProps> = ({
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* BARRA FLOTANTE TIPO CARRITO QUE ACOMPAÑA HASTA ABAJO */}
+      {panelOpen && step === 1 && (
+        <div className="pointer-events-none fixed inset-x-3 bottom-3 sm:inset-x-6 sm:bottom-5 z-40">
+          <div className="pointer-events-auto mx-auto flex max-w-4xl items-center justify-between gap-3 rounded-2xl border border-[#C5A572]/50 bg-[#141110]/95 px-3.5 py-2.5 sm:px-5 sm:py-3 text-[#F6F3EE] shadow-[0_18px_50px_rgba(0,0,0,0.55)] backdrop-blur-xl">
+            <div className="flex min-w-0 items-center gap-3">
+              <img
+                src={selectedHouse.heroImage}
+                alt={selectedHouse.name}
+                className="h-11 w-14 shrink-0 rounded-xl object-cover border border-white/15"
+              />
+              <div className="min-w-0">
+                <p className="font-technical text-[9px] uppercase tracking-[0.18em] text-[#C5A572] truncate">
+                  {selectedHouse.location === 'muralla' ? 'Alojamientos Muralla' : 'Entreviñedos'} ·{' '}
+                  {nights} {nights === 1 ? 'noche' : 'noches'} · {guests}{' '}
+                  {guests === 1 ? 'pers.' : 'pers.'}
+                </p>
+                <p className="font-editorial text-lg sm:text-xl font-medium leading-tight truncate">
+                  {selectedHouse.name.replace(/^\d+\.\s*/, '')}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+              <div className="text-right">
+                <p className="font-technical text-[9px] uppercase tracking-wider text-[#D8CFC2]/70 hidden sm:block">
+                  Total estancia
+                </p>
+                <p className="font-editorial text-xl sm:text-2xl font-semibold text-[#C5A572]">
+                  {totalPrice} €
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setStep(2);
+                  window.setTimeout(() => {
+                    panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }, 60);
+                }}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#4A1521] px-4 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.14em] text-[#F6F3EE] shadow-md transition hover:bg-[#631D2C] cursor-pointer"
+              >
+                <span>Continuar</span>
+                <ArrowRight className="h-3.5 w-3.5 text-[#C5A572]" />
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

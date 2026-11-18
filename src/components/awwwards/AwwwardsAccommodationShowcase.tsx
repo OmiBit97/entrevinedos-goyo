@@ -173,7 +173,7 @@ export const AwwwardsAccommodationShowcase: React.FC<AwwwardsAccommodationShowca
                           isSelected ? 'text-[#C5A572]' : 'text-[#5C5349]'
                         }`}
                       >
-                        <span>{house.location === 'muralla' ? 'La Muralla' : 'Entre Viñedos'}</span>
+                        <span>{house.location === 'muralla' ? 'Alojamientos Muralla' : 'Entreviñedos'}</span>
                         <span>·</span>
                         <span>{house.areaLabel}</span>
                         <span>·</span>
@@ -231,7 +231,7 @@ export const AwwwardsAccommodationShowcase: React.FC<AwwwardsAccommodationShowca
                 <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-wrap items-start justify-between gap-2 p-4 sm:p-5 bg-gradient-to-b from-[#141110]/70 to-transparent">
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C5A572]/50 bg-[#141110]/75 px-3.5 py-1 font-technical text-[10px] uppercase tracking-[0.18em] text-[#C5A572] backdrop-blur-md">
                     <MapPin className="h-3 w-3" />
-                    {activeHouse.location === 'muralla' ? 'Casco Histórico' : 'Entre Viñedos'}
+                    {activeHouse.location === 'muralla' ? 'Alojamientos Muralla' : 'Entreviñedos'}
                   </span>
 
                   <div className="flex items-center gap-2">

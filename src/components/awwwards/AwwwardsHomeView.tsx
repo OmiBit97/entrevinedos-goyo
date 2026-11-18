@@ -219,9 +219,9 @@ export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBookin
                   onChange={(e) => setHeroGuests(Number(e.target.value))}
                   className="mt-0.5 w-full bg-transparent font-technical text-xs text-[#1A1615] focus:outline-none cursor-pointer"
                 >
-                  {[2, 4, 6, 8, 12, 16].map((n) => (
+                  {Array.from({ length: 16 }, (_, i) => i + 1).map((n) => (
                     <option key={n} value={n}>
-                      {n === 16 ? 'Hasta 16 personas' : `${n} personas`}
+                      {n === 1 ? '1 persona' : `${n} personas`}
                     </option>
                   ))}
                 </select>
@@ -313,7 +313,7 @@ export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBookin
                 </div>
                 <div className="p-6 sm:p-8 space-y-3">
                   <h3 className="font-editorial text-3xl sm:text-4xl font-medium">
-                    Finca entre Viñedos
+                    Finca Entreviñedos
                   </h3>
                   <p className="text-sm leading-relaxed text-[#D8CFC2]/85">
                     {ALOJAMIENTOS_PAGE_COPY.introParagraphs[2]}

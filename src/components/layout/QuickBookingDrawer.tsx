@@ -19,7 +19,7 @@ export const QuickBookingDrawer: React.FC<QuickBookingDrawerProps> = ({ isOpen, 
   const matchingHouses = useMemo(() => {
     return ACCOMMODATIONS.filter((acc) => {
       if (zone !== 'all' && acc.location !== zone) return false;
-      if (guests > 8) return acc.location === 'muralla' || acc.maxGuests >= 6;
+      if (guests > 8) return acc.location === 'muralla';
       return guests >= 1 && guests <= acc.maxGuests;
     });
   }, [guests, zone]);
@@ -108,9 +108,9 @@ export const QuickBookingDrawer: React.FC<QuickBookingDrawerProps> = ({ isOpen, 
                   onChange={(e) => setGuests(Number(e.target.value))}
                   className="min-h-[44px] w-full rounded-xl border border-[#D8CFC2] bg-white px-3.5 py-2.5 text-sm text-[#1A1615] focus:border-[#4A1521] focus:outline-none cursor-pointer"
                 >
-                  {[2, 4, 6, 8, 12, 16].map((num) => (
+                  {Array.from({ length: 16 }, (_, i) => i + 1).map((num) => (
                     <option key={num} value={num}>
-                      {num === 16 ? 'Hasta 16 (Muralla I+II)' : `${num} personas`}
+                      {num === 1 ? '1 persona' : num > 8 ? `${num} personas (Muralla I+II)` : `${num} personas`}
                     </option>
                   ))}
                 </select>
@@ -126,9 +126,9 @@ export const QuickBookingDrawer: React.FC<QuickBookingDrawerProps> = ({ isOpen, 
                   onChange={(e) => setZone(e.target.value as 'all' | 'finca' | 'muralla')}
                   className="min-h-[44px] w-full rounded-xl border border-[#D8CFC2] bg-white px-3.5 py-2.5 text-sm text-[#1A1615] focus:border-[#4A1521] focus:outline-none cursor-pointer"
                 >
-                  <option value="all">Toda la Finca (10)</option>
-                  <option value="finca">Entre Viñedos (8)</option>
-                  <option value="muralla">La Muralla (2)</option>
+                  <option value="all">Todos los alojamientos (10)</option>
+                  <option value="finca">Entreviñedos (8)</option>
+                  <option value="muralla">Alojamientos Muralla (2)</option>
                 </select>
               </label>
             </div>

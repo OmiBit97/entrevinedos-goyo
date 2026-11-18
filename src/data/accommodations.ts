@@ -85,7 +85,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     shortDescription:
       'Casa Malbec: alojamiento para 4-6 personas con dos habitaciones, cocina americana totalmente equipada, salón con TV y baño privado.',
     location: 'finca',
-    locationLabel: 'Finca entre Viñedos · Peñafiel',
+    locationLabel: 'Finca Entreviñedos · Peñafiel',
     areaSqm: 60,
     areaLabel: '60m²',
     bedsLabel: 'x1 Cama de Matrimonio | x2 Individuales',
@@ -159,7 +159,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     shortDescription:
       'Casa Merlot: alojamiento para 4-6 personas con dos habitaciones, cocina equipada, salón con TV y baño completo.',
     location: 'finca',
-    locationLabel: 'Finca entre Viñedos · Peñafiel',
+    locationLabel: 'Finca Entreviñedos · Peñafiel',
     areaSqm: 60,
     areaLabel: '60 m²',
     bedsLabel: 'x1 Cama Matrimonio | x2 Individuales',
@@ -236,7 +236,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     shortDescription:
       'Casa Bodegas Marcos: alojamiento para 6-8 personas con tres habitaciones, cocina equipada, salón con TV y dos baños completos.',
     location: 'finca',
-    locationLabel: 'Finca entre Viñedos · Peñafiel',
+    locationLabel: 'Finca Entreviñedos · Peñafiel',
     areaSqm: 95,
     areaLabel: '95 m²',
     bedsLabel: 'x2 Camas Matrimonio | x2 Individuales',
@@ -318,7 +318,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     shortDescription:
       'Casa Tempranillo: alojamiento para 4-6 personas con dos habitaciones, cocina equipada, salón con sofá-cama y dos baños completos.',
     location: 'finca',
-    locationLabel: 'Finca entre Viñedos · Peñafiel',
+    locationLabel: 'Finca Entreviñedos · Peñafiel',
     areaSqm: 70,
     areaLabel: '70 m²',
     bedsLabel: 'x1 Matrimonio | x2 Individuales',
@@ -396,7 +396,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     shortDescription:
       'Casa Verdejo: apartamento diáfano para 2-4 personas con una habitación doble, cocina equipada, salón con TV y baño completo.',
     location: 'finca',
-    locationLabel: 'Finca entre Viñedos · Peñafiel',
+    locationLabel: 'Finca Entreviñedos · Peñafiel',
     areaSqm: 40,
     areaLabel: '40 m²',
     bedsLabel: 'x2 Camas Individuales',
@@ -471,7 +471,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     shortDescription:
       'Casa Garnacha: apartamento diafano para 2-4 personas con una cama de matrimonio, cocina equipada, salón con TV y baño completo.',
     location: 'finca',
-    locationLabel: 'Finca entre Viñedos · Peñafiel',
+    locationLabel: 'Finca Entreviñedos · Peñafiel',
     areaSqm: 30,
     areaLabel: '30 m²',
     bedsLabel: 'x1 Cama de Matrimonio',
@@ -544,7 +544,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     shortDescription:
       'Casa Cabernet Sauvignon: alojamiento para 4-6 personas con dos habitaciones, cocina equipada, salón con TV y dos baños completos.',
     location: 'finca',
-    locationLabel: 'Finca entre Viñedos · Peñafiel',
+    locationLabel: 'Finca Entreviñedos · Peñafiel',
     areaSqm: 60,
     areaLabel: '60 m²',
     bedsLabel: 'x1 Matrimonio | x2 Individuales',
@@ -622,7 +622,7 @@ export const ACCOMMODATIONS: Accommodation[] = [
     shortDescription:
       'Casa Albillo: apartemento diáfano para 2-4 personas con una cama de matrimonio, cocina equipada, salón con TV y baño completo.',
     location: 'finca',
-    locationLabel: 'Finca entre Viñedos · Peñafiel',
+    locationLabel: 'Finca Entreviñedos · Peñafiel',
     areaSqm: 30,
     areaLabel: '30 m²',
     bedsLabel: 'x1 Cama Matrimonio',

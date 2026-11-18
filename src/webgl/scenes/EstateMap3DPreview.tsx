@@ -7,7 +7,7 @@ import type { CameraWaypoint, EstatePOI } from '../types';
 
 const WAYPOINTS: CameraWaypoint[] = [
   { id: 'overview', label: 'Vista Global de Peñafiel', position: [0, 5.2, 7.6], lookAt: [0, 0.2, 0] },
-  { id: 'vinedos', label: 'Casas entre Viñedos (1–8)', position: [-3.4, 3.3, 4.6], lookAt: [-1.2, 0.4, -0.3] },
+  { id: 'vinedos', label: 'Casas Entreviñedos (1–8)', position: [-3.4, 3.3, 4.6], lookAt: [-1.2, 0.4, -0.3] },
   { id: 'bodega', label: 'Bodega & Catas Mágicas', position: [3.2, 3.0, 4.3], lookAt: [1.5, 0.4, -0.5] },
   { id: 'castillo', label: 'Vistas al Castillo & Piscina', position: [0.4, 2.7, 5.5], lookAt: [0.2, 0.8, -2.5] },
 ];
@@ -15,7 +15,7 @@ const WAYPOINTS: CameraWaypoint[] = [
 const ESTATE_POIS: EstatePOI[] = [
   {
     id: 'casas-finca',
-    title: 'Estancias 1–8 entre Viñedos',
+    title: 'Estancias 1–8 Entreviñedos',
     category: 'alojamiento',
     subtitle: 'Malbec, Merlot, Bodegas Marcos, Tempranillo, Verdejo (PMR), Garnacha, Cabernet Sauvignon y Albillo.',
     coords: [-1.5, 0.55, 0.4],
