@@ -31,6 +31,10 @@ export interface DirectBookingEngineProps {
   defaultOpen?: boolean;
   initialEnvironment?: EnvironmentOption;
   initialHouseSlug?: string;
+  initialCheckIn?: string;
+  initialCheckOut?: string;
+  initialGuests?: number;
+  initialHasCrib?: boolean;
   variant?: 'hero' | 'page';
 }
 
@@ -101,13 +105,17 @@ export const DirectBookingEngine: React.FC<DirectBookingEngineProps> = ({
   defaultOpen = false,
   initialEnvironment = 'all',
   initialHouseSlug,
+  initialCheckIn,
+  initialCheckOut,
+  initialGuests,
+  initialHasCrib,
   variant = 'hero',
 }) => {
   const defaults = useMemo(() => getDefaultDates(), []);
-  const [checkIn, setCheckIn] = useState(defaults.checkIn);
-  const [checkOut, setCheckOut] = useState(defaults.checkOut);
-  const [guests, setGuests] = useState<number>(4);
-  const [hasInfantCrib, setHasInfantCrib] = useState<boolean>(false);
+  const [checkIn, setCheckIn] = useState(initialCheckIn || defaults.checkIn);
+  const [checkOut, setCheckOut] = useState(initialCheckOut || defaults.checkOut);
+  const [guests, setGuests] = useState<number>(initialGuests && initialGuests > 0 ? initialGuests : 4);
+  const [hasInfantCrib, setHasInfantCrib] = useState<boolean>(Boolean(initialHasCrib));
   const [environment, setEnvironment] = useState<EnvironmentOption>(initialEnvironment);
 
   const [panelOpen, setPanelOpen] = useState<boolean>(defaultOpen);
@@ -137,13 +145,22 @@ export const DirectBookingEngine: React.FC<DirectBookingEngineProps> = ({
   }, [initialEnvironment]);
 
   useEffect(() => {
+    if (initialCheckIn) setCheckIn(initialCheckIn);
+    if (initialCheckOut) setCheckOut(initialCheckOut);
+    if (initialGuests && initialGuests > 0) setGuests(initialGuests);
+    if (initialHasCrib !== undefined) setHasInfantCrib(initialHasCrib);
+  }, [initialCheckIn, initialCheckOut, initialGuests, initialHasCrib]);
+
+  useEffect(() => {
     if (initialHouseSlug) {
       const target = ACCOMMODATIONS.find((a) => a.slug === initialHouseSlug);
       if (target) {
         setSelectedHouseSlug(target.slug);
+        setEnvironment(target.location);
         if (guests > target.maxGuests) {
           setGuests(Math.min(4, target.maxGuests));
         }
+        setStep(1);
         setPanelOpen(true);
       }
     }
@@ -350,26 +367,39 @@ export const DirectBookingEngine: React.FC<DirectBookingEngineProps> = ({
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
-              {[1, 2, 3].map((n) => (
-                <span
-                  key={n}
-                  className={`inline-flex h-6 w-6 items-center justify-center rounded-full font-technical text-[10px] font-semibold ${
-                    step === n
-                      ? 'bg-[#4A1521] text-[#F6F3EE]'
-                      : step > n
-                        ? 'bg-[#C5A572] text-[#141110]'
-                        : 'border border-[#D8CFC2] bg-white text-[#5C5349]'
-                  }`}
-                >
-                  {step > n ? '✓' : n}
-                </span>
-              ))}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              {[
+                { n: 1, label: 'Estancia' },
+                { n: 2, label: 'Tus datos' },
+                { n: 3, label: 'Confirmado' },
+              ].map((item) => {
+                const isDone = step > item.n;
+                const isCurrent = step === item.n;
+                const canClickBack = item.n === 1 && step === 2;
+                return (
+                  <button
+                    key={item.n}
+                    type="button"
+                    disabled={!canClickBack}
+                    onClick={() => canClickBack && setStep(1)}
+                    className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-technical text-[10px] font-semibold transition ${
+                      isCurrent
+                        ? 'bg-[#4A1521] text-[#F6F3EE]'
+                        : isDone
+                          ? 'bg-[#C5A572] text-[#141110]'
+                          : 'border border-[#D8CFC2] bg-white text-[#5C5349]'
+                    } ${canClickBack ? 'cursor-pointer hover:opacity-85' : 'cursor-default'}`}
+                  >
+                    <span>{isDone ? '✓' : item.n}</span>
+                    <span className="hidden sm:inline">{item.label}</span>
+                  </button>
+                );
+              })}
               <button
                 type="button"
                 onClick={() => setPanelOpen(false)}
                 aria-label="Cerrar resultados de reserva"
-                className="ml-2 flex h-8 w-8 items-center justify-center rounded-full border border-[#D8CFC2] bg-white text-[#1A1615] hover:border-[#4A1521] cursor-pointer"
+                className="ml-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#D8CFC2] bg-white text-[#1A1615] hover:border-[#4A1521] cursor-pointer"
               >
                 <X className="h-4 w-4" />
               </button>

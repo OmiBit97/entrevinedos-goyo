@@ -94,7 +94,7 @@ export const AccommodationDetailPage: React.FC = () => {
 
           <div className="flex flex-wrap gap-3">
             <Link
-              to={`${accommodation.bookingRoute}?casa=${accommodation.slug}`}
+              to={`/alojamientos?casa=${accommodation.slug}#reservar`}
               className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#4A1521] px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#F6F3EE] shadow-md transition hover:bg-[#631D2C]"
             >
               <CalendarCheck className="h-4 w-4 text-[#C5A572]" />
@@ -373,7 +373,7 @@ export const AccommodationDetailPage: React.FC = () => {
               </div>
 
               <Link
-                to={`${accommodation.bookingRoute}?casa=${accommodation.slug}`}
+                to={`/alojamientos?casa=${accommodation.slug}#reservar`}
                 className="flex w-full items-center justify-center gap-2 rounded-full bg-[#4A1521] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-[#F6F3EE] transition hover:bg-[#631D2C]"
               >
                 RESERVAR AHORA

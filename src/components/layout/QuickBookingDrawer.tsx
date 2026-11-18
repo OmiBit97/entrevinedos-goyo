@@ -24,6 +24,16 @@ export const QuickBookingDrawer: React.FC<QuickBookingDrawerProps> = ({ isOpen, 
     });
   }, [guests, zone]);
 
+  const buildBookingUrl = (casaSlug?: string) => {
+    const params = new URLSearchParams();
+    if (checkIn) params.set('checkIn', checkIn);
+    if (checkOut) params.set('checkOut', checkOut);
+    params.set('guests', String(guests));
+    if (zone !== 'all') params.set('env', zone);
+    if (casaSlug) params.set('casa', casaSlug);
+    return `/alojamientos?${params.toString()}#reservar`;
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -87,59 +97,40 @@ export const QuickBookingDrawer: React.FC<QuickBookingDrawerProps> = ({ isOpen, 
               </label>
             </div>
 
-            <div>
-              <div className="mb-2 flex items-center justify-between">
-                <span className="flex items-center gap-1.5 font-technical text-[10px] uppercase tracking-[0.18em] text-[#5C5349]">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <label className="block">
+                <span className="mb-1.5 flex items-center gap-1.5 font-technical text-[10px] uppercase tracking-[0.18em] text-[#5C5349]">
                   <Users className="h-3.5 w-3.5 text-[#4A1521]" />
-                  Huéspedes ({guests} {guests === 1 ? 'persona' : 'personas'})
+                  Huéspedes
                 </span>
-                <span className="text-[11px] text-[#9A7B56]">
-                  Niños &lt; 2 años gratis
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {[2, 4, 6, 8, 12, 16].map((num) => (
-                  <button
-                    key={num}
-                    type="button"
-                    onClick={() => setGuests(num)}
-                    className={`rounded-full px-3.5 py-1.5 font-technical text-xs transition cursor-pointer ${
-                      guests === num
-                        ? 'bg-[#4A1521] text-[#F6F3EE]'
-                        : 'border border-[#D8CFC2] bg-white text-[#1A1615] hover:border-[#9A7B56]'
-                    }`}
-                  >
-                    {num === 16 ? 'Hasta 16 (Muralla I+II)' : `${num} Pers.`}
-                  </button>
-                ))}
-              </div>
-            </div>
+                <select
+                  value={guests}
+                  onChange={(e) => setGuests(Number(e.target.value))}
+                  className="min-h-[44px] w-full rounded-xl border border-[#D8CFC2] bg-white px-3.5 py-2.5 text-sm text-[#1A1615] focus:border-[#4A1521] focus:outline-none cursor-pointer"
+                >
+                  {[2, 4, 6, 8, 12, 16].map((num) => (
+                    <option key={num} value={num}>
+                      {num === 16 ? 'Hasta 16 (Muralla I+II)' : `${num} personas`}
+                    </option>
+                  ))}
+                </select>
+              </label>
 
-            <div>
-              <span className="mb-2 flex items-center gap-1.5 font-technical text-[10px] uppercase tracking-[0.18em] text-[#5C5349]">
-                <MapPin className="h-3.5 w-3.5 text-[#4A1521]" />
-                Ubicación Preferida
-              </span>
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  { id: 'all', label: 'Todas' },
-                  { id: 'finca', label: 'Finca Viñedos' },
-                  { id: 'muralla', label: 'La Muralla' },
-                ].map((opt) => (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    onClick={() => setZone(opt.id as 'all' | 'finca' | 'muralla')}
-                    className={`rounded-xl px-3 py-2 text-xs font-medium transition cursor-pointer ${
-                      zone === opt.id
-                        ? 'bg-[#1A1615] text-[#F6F3EE]'
-                        : 'border border-[#D8CFC2] bg-white text-[#1A1615] hover:border-[#9A7B56]'
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
+              <label className="block">
+                <span className="mb-1.5 flex items-center gap-1.5 font-technical text-[10px] uppercase tracking-[0.18em] text-[#5C5349]">
+                  <MapPin className="h-3.5 w-3.5 text-[#4A1521]" />
+                  Entorno
+                </span>
+                <select
+                  value={zone}
+                  onChange={(e) => setZone(e.target.value as 'all' | 'finca' | 'muralla')}
+                  className="min-h-[44px] w-full rounded-xl border border-[#D8CFC2] bg-white px-3.5 py-2.5 text-sm text-[#1A1615] focus:border-[#4A1521] focus:outline-none cursor-pointer"
+                >
+                  <option value="all">Toda la Finca (10)</option>
+                  <option value="finca">Entre Viñedos (8)</option>
+                  <option value="muralla">La Muralla (2)</option>
+                </select>
+              </label>
             </div>
           </div>
 
@@ -174,7 +165,7 @@ export const QuickBookingDrawer: React.FC<QuickBookingDrawerProps> = ({ isOpen, 
                       Ver ficha
                     </Link>
                     <Link
-                      to={`${house.bookingRoute}?casa=${house.slug}`}
+                      to={buildBookingUrl(house.slug)}
                       onClick={onClose}
                       className="inline-flex items-center gap-1 rounded-full bg-[#4A1521] px-3 py-1.5 text-[11px] font-medium text-[#F6F3EE] hover:bg-[#631D2C]"
                     >
@@ -190,24 +181,14 @@ export const QuickBookingDrawer: React.FC<QuickBookingDrawerProps> = ({ isOpen, 
 
         {/* Footer de acción directa */}
         <div className="border-t border-[#D8CFC2] bg-[#EAE3D9]/70 p-4 sm:p-6 space-y-3">
-          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-            <Link
-              to="/reserva-finca"
-              onClick={onClose}
-              className="flex items-center justify-center gap-2 rounded-full bg-[#4A1521] px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#F6F3EE] transition hover:bg-[#631D2C]"
-            >
-              Reserva en la Finca
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-            <Link
-              to="/reserva-muralla"
-              onClick={onClose}
-              className="flex items-center justify-center gap-2 rounded-full border border-[#1A1615] bg-[#F6F3EE] px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#1A1615] transition hover:bg-[#1A1615] hover:text-[#F6F3EE]"
-            >
-              Reserva en La Muralla
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </div>
+          <Link
+            to={buildBookingUrl()}
+            onClick={onClose}
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#4A1521] px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#F6F3EE] transition hover:bg-[#631D2C]"
+          >
+            Continuar reserva en Alojamientos
+            <ArrowRight className="h-4 w-4 text-[#C5A572]" />
+          </Link>
           <a
             href={`tel:${SITE_METADATA.contact.primaryPhone}`}
             className="flex flex-wrap items-center justify-center gap-2 text-center text-xs text-[#5C5349] hover:text-[#4A1521]"

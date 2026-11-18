@@ -18,7 +18,13 @@ import {
 import { LightboxGallery } from '../accommodations/LightboxGallery';
 import { OptimizedImage } from '../ui/OptimizedImage';
 
-export const AwwwardsAccommodationShowcase: React.FC = () => {
+interface AwwwardsAccommodationShowcaseProps {
+  onBookHouse?: (house: Accommodation) => void;
+}
+
+export const AwwwardsAccommodationShowcase: React.FC<AwwwardsAccommodationShowcaseProps> = ({
+  onBookHouse,
+}) => {
   const [filters, setFilters] = useState<AccommodationFilters>({
     location: 'all',
     guests: 'all',
@@ -367,14 +373,26 @@ export const AwwwardsAccommodationShowcase: React.FC = () => {
                     Descubrir Estancia Completa
                     <ArrowUpRight className="h-4 w-4" />
                   </Link>
-                  <Link
-                    to={`${activeHouse.bookingRoute}?casa=${activeHouse.slug}`}
-                    data-cursor="RESERVAR"
-                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#4A1521] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#F6F3EE] shadow-md transition hover:bg-[#631D2C]"
-                  >
-                    <Sparkles className="h-3.5 w-3.5 text-[#C5A572]" />
-                    Reserva Directa
-                  </Link>
+                  {onBookHouse ? (
+                    <button
+                      type="button"
+                      onClick={() => onBookHouse(activeHouse)}
+                      data-cursor="RESERVAR"
+                      className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#4A1521] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#F6F3EE] shadow-md transition hover:bg-[#631D2C] cursor-pointer"
+                    >
+                      <Sparkles className="h-3.5 w-3.5 text-[#C5A572]" />
+                      Reservar esta Estancia
+                    </button>
+                  ) : (
+                    <Link
+                      to={`/alojamientos?casa=${activeHouse.slug}#reservar`}
+                      data-cursor="RESERVAR"
+                      className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#4A1521] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#F6F3EE] shadow-md transition hover:bg-[#631D2C]"
+                    >
+                      <Sparkles className="h-3.5 w-3.5 text-[#C5A572]" />
+                      Reservar esta Estancia
+                    </Link>
+                  )}
                 </div>
               </div>
             </article>

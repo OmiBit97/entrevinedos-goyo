@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, CalendarCheck, ExternalLink, Phone, ShieldCheck } from 'lucide-react';
-import { ACCOMMODATIONS } from '../data/accommodations';
 import { SITE_METADATA } from '../data/siteMetadata';
 import { DirectBookingEngine } from '../components/awwwards/DirectBookingEngine';
 
@@ -12,15 +11,14 @@ interface BookingPortalPageProps {
 export const BookingPortalPage: React.FC<BookingPortalPageProps> = ({ mode }) => {
   const [searchParams] = useSearchParams();
   const casaSlug = searchParams.get('casa') || undefined;
+  const paramCheckIn = searchParams.get('checkIn') || undefined;
+  const paramCheckOut = searchParams.get('checkOut') || undefined;
+  const paramGuests = searchParams.get('guests') ? Number(searchParams.get('guests')) : undefined;
   const widgetContainerRef = useRef<HTMLDivElement | null>(null);
   const [showExternalWidget, setShowExternalWidget] = useState(mode === 'confirmacion');
 
   const isMuralla = mode === 'muralla';
   const isConfirmation = mode === 'confirmacion';
-
-  const zoneHouses = ACCOMMODATIONS.filter((a) =>
-    isMuralla ? a.location === 'muralla' : a.location === 'finca',
-  );
 
   useEffect(() => {
     if (!showExternalWidget && !isConfirmation) return;
@@ -76,84 +74,21 @@ export const BookingPortalPage: React.FC<BookingPortalPageProps> = ({ mode }) =>
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            <Link
-              to="/reserva-finca"
-              className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition ${
-                mode === 'finca'
-                  ? 'bg-[#4A1521] text-[#F6F3EE]'
-                  : 'border border-[#D8CFC2] bg-white text-[#1A1615]'
-              }`}
+          {!isConfirmation && (
+            <button
+              type="button"
+              onClick={() => setShowExternalWidget((prev) => !prev)}
+              className="inline-flex items-center gap-1.5 self-start rounded-full border border-[#D8CFC2] bg-white px-4 py-2 font-technical text-[11px] uppercase tracking-wider text-[#5C5349] transition hover:border-[#4A1521] hover:text-[#4A1521] cursor-pointer"
             >
-              Finca Viñedos
-            </Link>
-            <Link
-              to="/reserva-muralla"
-              className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition ${
-                mode === 'muralla'
-                  ? 'bg-[#4A1521] text-[#F6F3EE]'
-                  : 'border border-[#D8CFC2] bg-white text-[#1A1615]'
-              }`}
-            >
-              La Muralla
-            </Link>
-          </div>
+              <span>
+                {showExternalWidget ? 'Volver al Motor Directo' : 'Calendario Externo MisterPlan'}
+              </span>
+              <ExternalLink className="h-3 w-3 shrink-0" />
+            </button>
+          )}
         </div>
 
-        {/* Selector rápido de estancias */}
-        {!isConfirmation && (
-          <div className="mt-5 sm:mt-6 flex flex-wrap gap-1.5 sm:gap-2">
-            {zoneHouses.map((h) => (
-              <Link
-                key={h.slug}
-                to={`${h.bookingRoute}?casa=${h.slug}`}
-                className={`inline-flex items-center gap-1.5 rounded-full border px-3 sm:px-3.5 py-1.5 text-xs transition ${
-                  casaSlug === h.slug
-                    ? 'border-[#4A1521] bg-[#4A1521] text-[#F6F3EE]'
-                    : 'border-[#D8CFC2] bg-white text-[#1A1615] hover:border-[#4A1521]'
-                }`}
-              >
-                <span className="font-semibold">{h.name.replace(/^\d+\.\s*/, '')}</span>
-                <span className={casaSlug === h.slug ? 'text-[#C5A572]' : 'text-[#9A7B56]'}>
-                  · {h.capacityLabel}
-                </span>
-              </Link>
-            ))}
-          </div>
-        )}
-
-        {/* Selector entre Motor Interno Directo Simulado o Calendario Externo MisterPlan */}
-        {!isConfirmation && (
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex w-full sm:w-auto flex-col sm:flex-row rounded-2xl sm:rounded-full border border-[#D8CFC2] bg-white p-1 gap-1">
-              <button
-                type="button"
-                onClick={() => setShowExternalWidget(false)}
-                className={`rounded-xl sm:rounded-full px-4 py-2 font-technical text-[11px] uppercase tracking-wider text-center transition cursor-pointer ${
-                  !showExternalWidget
-                    ? 'bg-[#141110] text-[#C5A572]'
-                    : 'text-[#5C5349] hover:text-[#1A1615]'
-                }`}
-              >
-                Motor Directo Simulado
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowExternalWidget(true)}
-                className={`inline-flex items-center justify-center gap-1.5 rounded-xl sm:rounded-full px-4 py-2 font-technical text-[11px] uppercase tracking-wider transition cursor-pointer ${
-                  showExternalWidget
-                    ? 'bg-[#141110] text-[#C5A572]'
-                    : 'text-[#5C5349] hover:text-[#1A1615]'
-                }`}
-              >
-                <span>Calendario Externo MisterPlan</span>
-                <ExternalLink className="h-3 w-3 shrink-0" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Motor Propio Directo Simulado en Primer Plano */}
+        {/* Motor Propio Directo en Primer Plano */}
         {!isConfirmation && !showExternalWidget && (
           <div className="mt-6">
             <DirectBookingEngine
@@ -161,6 +96,9 @@ export const BookingPortalPage: React.FC<BookingPortalPageProps> = ({ mode }) =>
               variant="page"
               initialEnvironment={isMuralla ? 'muralla' : 'finca'}
               initialHouseSlug={casaSlug}
+              initialCheckIn={paramCheckIn}
+              initialCheckOut={paramCheckOut}
+              initialGuests={paramGuests}
             />
           </div>
         )}

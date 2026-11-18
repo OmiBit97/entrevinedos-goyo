@@ -1,14 +1,16 @@
 import React, { Suspense, lazy, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
+  Calendar,
   Clock,
   Compass,
   Expand,
   MapPin,
   Sparkles,
+  Users,
   Wine,
 } from 'lucide-react';
 import { ACCOMMODATIONS, ALOJAMIENTOS_PAGE_COPY } from '../../data/accommodations';
@@ -20,7 +22,6 @@ import { LightboxGallery } from '../accommodations/LightboxGallery';
 import { EditorialAccordion } from '../ui/EditorialAccordion';
 import { OptimizedImage } from '../ui/OptimizedImage';
 import { AwwwardsAccommodationShowcase } from './AwwwardsAccommodationShowcase';
-import { DirectBookingEngine } from './DirectBookingEngine';
 
 const LiquidTerroirCanvas = lazy(() => import('../../webgl/scenes/LiquidTerroirCanvas'));
 
@@ -39,7 +40,20 @@ const MARQUEE_ITEMS = [
 ];
 
 export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBooking }) => {
+  const navigate = useNavigate();
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [heroCheckIn, setHeroCheckIn] = useState('');
+  const [heroCheckOut, setHeroCheckOut] = useState('');
+  const [heroGuests, setHeroGuests] = useState(4);
+
+  const handleHeroBookingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (heroCheckIn) params.set('checkIn', heroCheckIn);
+    if (heroCheckOut) params.set('checkOut', heroCheckOut);
+    params.set('guests', String(heroGuests));
+    navigate(`/alojamientos?${params.toString()}#reservar`);
+  };
 
   const faqAccordionItems = useMemo(
     () =>
@@ -104,10 +118,68 @@ export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBookin
             </p>
           </div>
 
-          {/* Motor de Reserva Directo Interno Simulado */}
-          <div className="mt-8 sm:mt-10">
-            <DirectBookingEngine />
-          </div>
+          {/* Barra rápida que lleva directo al motor de reserva en Alojamientos */}
+          <form
+            onSubmit={handleHeroBookingSubmit}
+            className="mx-auto mt-8 sm:mt-10 max-w-4xl rounded-2xl sm:rounded-full border border-[#C5A572]/45 bg-[#141110]/85 p-2.5 sm:p-2 backdrop-blur-xl shadow-[0_24px_60px_rgba(0,0,0,0.45)]"
+          >
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-12 sm:items-center">
+              <label className="sm:col-span-3 flex flex-col px-4 py-1.5 text-left">
+                <span className="flex items-center gap-1.5 font-technical text-[9px] uppercase tracking-[0.18em] text-[#C5A572]">
+                  <Calendar className="h-3 w-3 shrink-0" />
+                  Entrada
+                </span>
+                <input
+                  type="date"
+                  value={heroCheckIn}
+                  onChange={(e) => setHeroCheckIn(e.target.value)}
+                  className="mt-0.5 w-full bg-transparent font-technical text-xs text-[#F6F3EE] focus:outline-none [color-scheme:dark]"
+                />
+              </label>
+
+              <label className="sm:col-span-3 flex flex-col border-t sm:border-t-0 sm:border-l border-white/10 px-4 py-1.5 text-left">
+                <span className="flex items-center gap-1.5 font-technical text-[9px] uppercase tracking-[0.18em] text-[#C5A572]">
+                  <Calendar className="h-3 w-3 shrink-0" />
+                  Salida
+                </span>
+                <input
+                  type="date"
+                  min={heroCheckIn || undefined}
+                  value={heroCheckOut}
+                  onChange={(e) => setHeroCheckOut(e.target.value)}
+                  className="mt-0.5 w-full bg-transparent font-technical text-xs text-[#F6F3EE] focus:outline-none [color-scheme:dark]"
+                />
+              </label>
+
+              <label className="sm:col-span-3 flex flex-col border-t sm:border-t-0 sm:border-l border-white/10 px-4 py-1.5 text-left">
+                <span className="flex items-center gap-1.5 font-technical text-[9px] uppercase tracking-[0.18em] text-[#C5A572]">
+                  <Users className="h-3 w-3 shrink-0" />
+                  Huéspedes
+                </span>
+                <select
+                  value={heroGuests}
+                  onChange={(e) => setHeroGuests(Number(e.target.value))}
+                  className="mt-0.5 w-full bg-transparent font-technical text-xs text-[#F6F3EE] focus:outline-none cursor-pointer [&>option]:bg-[#141110]"
+                >
+                  {[2, 4, 6, 8, 12, 16].map((n) => (
+                    <option key={n} value={n}>
+                      {n === 16 ? 'Hasta 16 personas' : `${n} personas`}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <div className="sm:col-span-3">
+                <button
+                  type="submit"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl sm:rounded-full bg-[#4A1521] px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#F6F3EE] transition hover:bg-[#631D2C] cursor-pointer"
+                >
+                  <span>Ver Alojamientos</span>
+                  <ArrowRight className="h-4 w-4 text-[#C5A572]" />
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
 
         {/* Scroll Prompt */}
