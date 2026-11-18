@@ -1,10 +1,10 @@
 import React, { Suspense, lazy, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
   Calendar,
+  ChevronDown,
   Clock,
   Compass,
   Expand,
@@ -71,7 +71,7 @@ export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBookin
       {/* =========================================================================
           00 · HERO EDITORIAL CENTRADO CON MOTOR DE RESERVA DIRECTO INTEGRADO
           ========================================================================= */}
-      <section className="relative min-h-[82dvh] sm:min-h-[92dvh] flex flex-col justify-between overflow-hidden bg-[#141110] pt-28 sm:pt-36 pb-12 sm:pb-14 text-[#F6F3EE]">
+      <section className="relative min-h-[100dvh] flex flex-col justify-between overflow-hidden bg-[#141110] pt-24 sm:pt-36 pb-7 sm:pb-10 text-[#F6F3EE]">
         <div className="absolute inset-0 z-0">
           <video
             autoPlay
@@ -135,14 +135,14 @@ export const AwwwardsHomeView: React.FC<AwwwardsHomeViewProps> = ({ onOpenBookin
           </div>
         </div>
 
-        {/* Scroll Prompt */}
-        <div className="relative z-10 mx-auto hidden sm:flex items-center justify-center pt-8">
+        {/* Scroll Prompt bien visible en móvil y desktop */}
+        <div className="relative z-10 mx-auto flex items-center justify-center pt-6">
           <a
-            href="#alojamientos-showcase"
-            className="inline-flex items-center gap-2 font-technical text-[10px] uppercase tracking-[0.28em] text-[#C5A572]/85 hover:text-[#F6F3EE] transition"
+            href="#reserva-rapida"
+            className="inline-flex flex-col items-center gap-1.5 rounded-full px-4 py-2 font-technical text-[11px] uppercase tracking-[0.22em] text-[#C5A572] transition hover:text-[#F6F3EE]"
           >
-            <span>{HOME_CONTENT.heroScrollLabel}</span>
-            <ArrowDownRight className="h-3.5 w-3.5" />
+            <span>Desliza hacia abajo</span>
+            <ChevronDown className="h-4 w-4 animate-bounce text-[#C5A572]" />
           </a>
         </div>
       </section>
